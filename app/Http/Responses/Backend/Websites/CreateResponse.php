@@ -7,9 +7,9 @@ use Illuminate\Contracts\Support\Responsable;
 class CreateResponse implements Responsable
 {
     public $countryall;
+
     public function __construct($country)
     {
-       // dd($country);
         $this->countryall = $country;
     }
 
@@ -22,8 +22,10 @@ class CreateResponse implements Responsable
      */
     public function toResponse($request)
     {
-        return view('backend.websites.create')->with([
-                                                         'countryall' => $this->countryall
-                                                     ]);
+        return view('backend.websites.create')->with(
+            [
+                'countryall' => $this->countryall
+            ]
+        );
     }
 }

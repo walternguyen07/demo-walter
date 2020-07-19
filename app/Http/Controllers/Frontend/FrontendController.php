@@ -11,25 +11,25 @@ use Illuminate\Support\Facades\DB;
  */
 class FrontendController extends Controller
 {
- /**
-  * @return \Illuminate\View\View
-  */
- public function index()
- {
-  $ipRequest = \Request::ip();
-  $countryCode = \Location::get($ipRequest);
-  $website = DB::table('website_countrys')->where('country_id', $countryCode->countryCode)->first();
-  return \Redirect::to($website->website_url);
- }
+    /**
+     * @return \Illuminate\View\View
+     */
+    public function index()
+    {
+        $ipRequest = \Request::ip();
+        $countryCode = \Location::get($ipRequest);
+        $website = DB::table('website_countrys')->where('country_id', $countryCode->countryCode)->first();
+        return \Redirect::to($website->website_url);
+    }
 
- /**
-  * show page by $page_slug.
-  */
- public function showPage($slug, PagesRepository $pages)
- {
-  $result = $pages->findBySlug($slug);
+    /**
+     * show page by $page_slug.
+     */
+    public function showPage($slug, PagesRepository $pages)
+    {
+        $result = $pages->findBySlug($slug);
 
-  return view('frontend.pages.index')
-   ->withpage($result);
- }
+        return view('frontend.pages.index')
+            ->withpage($result);
+    }
 }

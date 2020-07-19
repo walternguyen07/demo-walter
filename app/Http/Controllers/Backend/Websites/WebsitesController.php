@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Backend\Websites;
 
-use App\Models\Websites\Website;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Responses\RedirectResponse;
-use App\Http\Responses\ViewResponse;
+use App\Http\Requests\Backend\Websites\CreateWebsiteRequest;
+use App\Http\Requests\Backend\Websites\DeleteWebsiteRequest;
+use App\Http\Requests\Backend\Websites\EditWebsiteRequest;
+use App\Http\Requests\Backend\Websites\ManageWebsiteRequest;
+use App\Http\Requests\Backend\Websites\StoreWebsiteRequest;
+use App\Http\Requests\Backend\Websites\UpdateWebsiteRequest;
 use App\Http\Responses\Backend\Websites\CreateResponse;
 use App\Http\Responses\Backend\Websites\EditResponse;
+use App\Http\Responses\RedirectResponse;
+use App\Http\Responses\ViewResponse;
+use App\Models\Websites\Website;
 use App\Repositories\Backend\Websites\WebsiteRepository;
-use App\Http\Requests\Backend\Websites\ManageWebsiteRequest;
-use App\Http\Requests\Backend\Websites\CreateWebsiteRequest;
-use App\Http\Requests\Backend\Websites\StoreWebsiteRequest;
-use App\Http\Requests\Backend\Websites\EditWebsiteRequest;
-use App\Http\Requests\Backend\Websites\UpdateWebsiteRequest;
-use App\Http\Requests\Backend\Websites\DeleteWebsiteRequest;
 use Countries;
+use Illuminate\Http\Request;
+
 /**
  * WebsitesController
  */
@@ -30,7 +31,7 @@ class WebsitesController extends Controller
 
     /**
      * contructor to initialize repository object
-     * @param WebsiteRepository $repository;
+     * @param WebsiteRepository $repository ;
      */
     public function __construct(WebsiteRepository $repository)
     {
@@ -40,29 +41,31 @@ class WebsitesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  App\Http\Requests\Backend\Websites\ManageWebsiteRequest  $request
+     * @param App\Http\Requests\Backend\Websites\ManageWebsiteRequest $request
      * @return \App\Http\Responses\ViewResponse
      */
     public function index(ManageWebsiteRequest $request)
     {
         return new ViewResponse('backend.websites.index');
     }
+
     /**
      * Show the form for creating a new resource.
      *
-     * @param  CreateWebsiteRequestNamespace  $request
+     * @param CreateWebsiteRequestNamespace $request
      * @return \App\Http\Responses\Backend\Websites\CreateResponse
      */
     public function create(CreateWebsiteRequest $request)
     {
         $countries = new Countries();
-        $counntryall =  Countries::getList('en');
+        $counntryall = Countries::getList('en');
         return new CreateResponse($counntryall);
     }
+
     /**
      * Store a newly created resource in storage.
      *
-     * @param  StoreWebsiteRequestNamespace  $request
+     * @param StoreWebsiteRequestNamespace $request
      * @return \App\Http\Responses\RedirectResponse
      */
     public function store(StoreWebsiteRequest $request)
@@ -72,24 +75,29 @@ class WebsitesController extends Controller
         //Create the model using repository create method
         $this->repository->create($input);
         //return with successfull message
-        return new RedirectResponse(route('admin.websites.index'), ['flash_success' => trans('alerts.backend.websites.created')]);
+        return new RedirectResponse(
+            route('admin.websites.index'),
+            ['flash_success' => trans('alerts.backend.websites.created')]
+        );
     }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  App\Models\Websites\Website  $website
-     * @param  EditWebsiteRequestNamespace  $request
+     * @param App\Models\Websites\Website $website
+     * @param EditWebsiteRequestNamespace $request
      * @return \App\Http\Responses\Backend\Websites\EditResponse
      */
     public function edit(Website $website, EditWebsiteRequest $request)
     {
         return new EditResponse($website);
     }
+
     /**
      * Update the specified resource in storage.
      *
-     * @param  UpdateWebsiteRequestNamespace  $request
-     * @param  App\Models\Websites\Website  $website
+     * @param UpdateWebsiteRequestNamespace $request
+     * @param App\Models\Websites\Website $website
      * @return \App\Http\Responses\RedirectResponse
      */
     public function update(UpdateWebsiteRequest $request, Website $website)
@@ -97,15 +105,19 @@ class WebsitesController extends Controller
         //Input received from the request
         $input = $request->except(['_token']);
         //Update the model using repository update method
-        $this->repository->update( $website, $input );
+        $this->repository->update($website, $input);
         //return with successfull message
-        return new RedirectResponse(route('admin.websites.index'), ['flash_success' => trans('alerts.backend.websites.updated')]);
+        return new RedirectResponse(
+            route('admin.websites.index'),
+            ['flash_success' => trans('alerts.backend.websites.updated')]
+        );
     }
+
     /**
      * Remove the specified resource from storage.
      *
-     * @param  DeleteWebsiteRequestNamespace  $request
-     * @param  App\Models\Websites\Website  $website
+     * @param DeleteWebsiteRequestNamespace $request
+     * @param App\Models\Websites\Website $website
      * @return \App\Http\Responses\RedirectResponse
      */
     public function destroy(Website $website, DeleteWebsiteRequest $request)
@@ -113,7 +125,10 @@ class WebsitesController extends Controller
         //Calling the delete method on repository
         $this->repository->delete($website);
         //returning with successfull message
-        return new RedirectResponse(route('admin.websites.index'), ['flash_success' => trans('alerts.backend.websites.deleted')]);
+        return new RedirectResponse(
+            route('admin.websites.index'),
+            ['flash_success' => trans('alerts.backend.websites.deleted')]
+        );
     }
-    
+
 }

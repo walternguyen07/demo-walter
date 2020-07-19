@@ -28,8 +28,10 @@ class EditResponse implements Responsable
      */
     public function toResponse($request)
     {
-        return view('backend.websites.edit')->with([
-            'website' => $this->website
-        ]);
+        return view('backend.websites.edit')->with(
+            [
+                'website' => $this->website
+            ]
+        );
     }
 }

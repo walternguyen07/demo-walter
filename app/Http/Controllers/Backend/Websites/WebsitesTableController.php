@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Backend\Websites;
 
-use Carbon\Carbon;
 use App\Http\Controllers\Controller;
-use Yajra\DataTables\Facades\DataTables;
-use App\Repositories\Backend\Websites\WebsiteRepository;
 use App\Http\Requests\Backend\Websites\ManageWebsiteRequest;
+use App\Repositories\Backend\Websites\WebsiteRepository;
+use Carbon\Carbon;
+use Yajra\DataTables\Facades\DataTables;
 
 /**
  * Class WebsitesTableController.
@@ -21,7 +21,7 @@ class WebsitesTableController extends Controller
 
     /**
      * contructor to initialize repository object
-     * @param WebsiteRepository $website;
+     * @param WebsiteRepository $website ;
      */
     public function __construct(WebsiteRepository $website)
     {
@@ -40,12 +40,18 @@ class WebsitesTableController extends Controller
             ->escapeColumns(['id'])
             ->escapeColumns(['website_url'])
             ->escapeColumns(['country_id'])
-            ->addColumn('created_at', function ($website) {
-                return Carbon::parse($website->created_at)->toDateString();
-            })
-            ->addColumn('actions', function ($website) {
-                return $website->action_buttons;
-            })
+            ->addColumn(
+                'created_at',
+                function ($website) {
+                    return Carbon::parse($website->created_at)->toDateString();
+                }
+            )
+            ->addColumn(
+                'actions',
+                function ($website) {
+                    return $website->action_buttons;
+                }
+            )
             ->make(true);
     }
 }

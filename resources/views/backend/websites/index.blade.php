@@ -8,13 +8,13 @@
 
 @section('content')
     <div class="box box-info">
-        <div class="box-header with-border">
+        {{--<div class="box-header with-border">
             <h3 class="box-title">{{ trans('labels.backend.websites.management') }}</h3>
 
             <div class="box-tools pull-right">
                 @include('backend.websites.partials.websites-header-buttons')
             </div>
-        </div><!--box-header with-border-->
+        </div>--}}<!--box-header with-border-->
 
         <div class="box-body">
             <div class="table-responsive data-table-wrapper">
